@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payout Accounts - Payout Dashboard</title>
+  <link rel="stylesheet" href="/src/styles/global.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400..800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="app-content">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <img src="/public/Fictional_logo.svg" alt="logo" class="logo-full" />
+            <div class="logo-mini">
+              <i data-lucide="zap" class="logo-icon"></i>
+            </div>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="index.html" class="nav-link">
+                <img src="/public/dashboard.svg" alt="dashboard" class="nav-icon" />
+                <span class="nav-text">Dashboard</span>
+              </a>
+            </li>
+
+            <li class="nav-section-title">PAYMENTS</li>
+            <li>
+              <a href="disbursement.html" class="nav-link">
+                <img src="/public/dashboard.svg" alt="disbursement" class="nav-icon" />
+                <span class="nav-text">Disbursement</span>
+              </a>
+            </li>
+            <li>
+              <a href="collections.html" class="nav-link">
+                <img src="/public/dashboard.svg" alt="collections" class="nav-icon" />
+                <span class="nav-text">Collections</span>
+              </a>
+            </li>
+
+            <li class="nav-section-title">ACCOUNTS</li>
+            <li>
+              <a href="payout-accounts.html" class="nav-link">
+                <img src="/public/dashboard.svg" alt="payout-accounts" class="nav-icon" />
+                <span class="nav-text">Payout Accounts</span>
+              </a>
+            </li>
+            <li>
+              <a href="#virtual-accounts" class="nav-link">
+                <img src="/public/dashboard.svg" alt="virtual-accounts" class="nav-icon" />
+                <span class="nav-text">Virtual Accounts</span>
+              </a>
+            </li>
+            <li>
+              <a href="#wallet-activity" class="nav-link">
+                <img src="/public/dashboard.svg" alt="wallet-activity" class="nav-icon" />
+                <span class="nav-text">Wallet Activity</span>
+              </a>
+            </li>
+            <li>
+              <a href="#wallet-transaction" class="nav-link">
+                <img src="/public/dashboard.svg" alt="wallet-transaction" class="nav-icon" />
+                <span class="nav-text">Wallet Transaction</span>
+              </a>
+            </li>
+            <li>
+              <a href="#merchants" class="nav-link">
+                <img src="/public/merchants.svg" alt="merchants" class="nav-icon" />
+                <span class="nav-text">Merchants</span>
+              </a>
+            </li>
+
+            <li class="nav-section-title">LOGS</li>
+            <li>
+              <a href="#export-logs" class="nav-link">
+                <img src="/public/middle.svg" alt="export-logs" class="nav-icon" />
+                <span class="nav-text">Export Logs</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <p class="sidebar-version">v1.0.0</p>
+        </div>
+      </aside>
+
+      <div class="main-layout">
+        <header class="top-nav">
+          <div class="top-nav-content">
+                    <div class="top-nav-left">
+                      <h2 class="page-title">Payout Accounts</h2>
+                    </div>            <div class="top-nav-right">
+              <button class="sidebar-toggle" id="sidebarToggle">
+                <i data-lucide="menu" class="nav-icon-top"></i>
+              </button>
+              <div class="nav-item">
+                <i data-lucide="bell" class="nav-icon-top"></i>
+              </div>
+              <div class="nav-item">
+                <i data-lucide="settings" class="nav-icon-top"></i>
+              </div>
+              <div class="nav-item user-menu">
+                <i data-lucide="user-circle" class="nav-icon-top"></i>
+                <div class="user-dropdown">
+                  <div class="dropdown-item">
+                    <i data-lucide="user" style="width: 16px; height: 16px;"></i>
+                    <span>Profile</span>
+                  </div>
+                  <div class="dropdown-item">
+                    <i data-lucide="settings" style="width: 16px; height: 16px;"></i>
+                    <span>Settings</span>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <div class="dropdown-item" id="themeToggle">
+                    <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+                    <span>Dark Mode</span>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <div class="dropdown-item">
+                    <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+                    <span>Logout</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="main-content">
+          <div class="dashboard-container">
+            <div class="page active" style="display: block;">
+              
+              <div class="glass-panel">
+              <p>Payout Accounts section coming soon...</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/src/js/sidebar.js"></script>
+  <script src="/src/js/theme.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+
+</html>

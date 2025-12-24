@@ -1,0 +1,255 @@
+/* Disbursement Page Styles */
+.disbursement-utilities {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.disbursement-insights {
+  margin-bottom: 20px;
+}
+
+.disbursement-utilities .utility-btn,
+.disbursement-utilities .utility-search,
+.disbursement-utilities select {
+  height: 40px;
+  /* Consistent height */
+  border-radius: 8px;
+}
+
+.disbursement-utilities .utility-btn {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #000;
+  font-size: var(--font-sm);
+  font-weight: 500;
+}
+
+.disbursement-utilities .utility-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.disbursement-utilities .utility-btn.primary {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+}
+
+.disbursement-utilities .utility-btn.primary:hover {
+  background: var(--color-accent);
+}
+
+.disbursement-utilities .utility-search {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0 12px;
+}
+
+.disbursement-utilities .utility-search svg {
+  width: 18px;
+  height: 18px;
+  color: #666;
+}
+
+.disbursement-utilities input {
+  background: transparent;
+  border: none;
+  padding: 0 8px;
+  height: 100%;
+  outline: none;
+  color: #000;
+  font-size: var(--font-sm);
+}
+
+.disbursement-utilities select {
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  outline: none;
+  color: #000;
+  font-size: var(--font-sm);
+}
+
+/* Data Table Header for Disbursement */
+.disbursement-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  padding-inline: var(--spacing-md);
+}
+
+.disbursement-status-tabs {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.status-tab {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: #7f8c8d;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.status-tab.active {
+  background-color: #434343;
+  color: white;
+}
+
+.disbursement-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Pagination Styles */
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+}
+
+.pagination-info {
+  font-size: var(--font-sm);
+  color: #7f8c8d;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-btn {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #2c3e50;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: var(--color-primary);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 4px;
+}
+
+.page-num {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #2c3e50;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: var(--font-sm);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.page-num:hover:not(.active) {
+  background-color: #f8f9fa;
+  border-color: var(--color-primary);
+}
+
+.page-num.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+[data-theme="dark"] .pagination-container {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .pagination-info {
+  color: #bdc3c7;
+}
+
+[data-theme="dark"] .pagination-btn,
+[data-theme="dark"] .page-num {
+  background-color: #2c3e50;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ecf0f1;
+}
+
+[data-theme="dark"] .pagination-btn:hover:not(:disabled),
+[data-theme="dark"] .page-num:hover:not(.active) {
+  background-color: #34495e;
+  border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .page-num.active {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .disbursement-utilities .utility-btn:not(.primary),
+[data-theme="dark"] .disbursement-utilities .utility-search,
+[data-theme="dark"] .disbursement-utilities select {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ecf0f1;
+}
+
+[data-theme="dark"] .disbursement-utilities .utility-btn:not(.primary):hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .disbursement-utilities input {
+  color: #ecf0f1;
+}
+
+[data-theme="dark"] .disbursement-utilities .utility-search svg {
+  color: #bdc3c7;
+}

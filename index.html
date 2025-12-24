@@ -1,82 +1,319 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Payout Dashboard</title>
-    <link rel="stylesheet" href="/src/styles/global.css" />
-  </head>
-  <body>
-    <div id="app">
-      <header class="header">
-        <div class="header-content">
-          <h1>Payout Dashboard</h1>
-          <div class="header-actions">
-            <button class="btn-header">Settings</button>
-            <button class="btn-header">Logout</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payout Dashboard</title>
+  <link rel="stylesheet" href="/src/styles/global.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400..800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="app-content">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <img src="/public/Fictional_logo.svg" alt="logo" class="logo-full" />
+            <div class="logo-mini">
+              <i data-lucide="zap" class="logo-icon"></i>
+            </div>
           </div>
         </div>
-      </header>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="index.html" class="nav-link">
+                <img src="/public/dashboard.svg" alt="dashboard" class="nav-icon" />
+                <span class="nav-text">Dashboard</span>
+              </a>
+            </li>
 
-      <div class="app-content">
-        <aside class="sidebar">
-          <nav class="sidebar-nav">
-            <ul>
-              <li><a href="#dashboard" class="nav-link active">Dashboard</a></li>
-              <li><a href="#payouts" class="nav-link">Payouts</a></li>
-              <li><a href="#reports" class="nav-link">Reports</a></li>
-              <li><a href="#transactions" class="nav-link">Transactions</a></li>
-              <li><a href="#settings" class="nav-link">Settings</a></li>
-            </ul>
-          </nav>
-        </aside>
+            <li class="nav-section-title">PAYMENTS</li>
+            <li>
+              <a href="disbursement.html" class="nav-link">
+                <img src="/public/dashboard.svg" alt="disbursement" class="nav-icon" />
+                <span class="nav-text">Disbursement</span>
+              </a>
+            </li>
+            <li>
+              <a href="collections.html" class="nav-link">
+                <img src="/public/dashboard.svg" alt="collections" class="nav-icon" />
+                <span class="nav-text">Collections</span>
+              </a>
+            </li>
+
+            <li class="nav-section-title">ACCOUNTS</li>
+            <li>
+              <a href="payout-accounts.html" class="nav-link">
+                <img src="/public/dashboard.svg" alt="payout-accounts" class="nav-icon" />
+                <span class="nav-text">Payout Accounts</span>
+              </a>
+            </li>
+            <li>
+              <a href="#virtual-accounts" class="nav-link">
+                <img src="/public/dashboard.svg" alt="virtual-accounts" class="nav-icon" />
+                <span class="nav-text">Virtual Accounts</span>
+              </a>
+            </li>
+            <li>
+              <a href="#wallet-activity" class="nav-link">
+                <img src="/public/dashboard.svg" alt="wallet-activity" class="nav-icon" />
+                <span class="nav-text">Wallet Activity</span>
+              </a>
+            </li>
+            <li>
+              <a href="#wallet-transaction" class="nav-link">
+                <img src="/public/dashboard.svg" alt="wallet-transaction" class="nav-icon" />
+                <span class="nav-text">Wallet Transaction</span>
+              </a>
+            </li>
+            <li>
+              <a href="#merchants" class="nav-link">
+                <img src="/public/merchants.svg" alt="merchants" class="nav-icon" />
+                <span class="nav-text">Merchants</span>
+              </a>
+            </li>
+
+            <li class="nav-section-title">LOGS</li>
+            <li>
+              <a href="#export-logs" class="nav-link">
+                <img src="/public/middle.svg" alt="export-logs" class="nav-icon" />
+                <span class="nav-text">Export Logs</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <p class="sidebar-version">v1.0.0</p>
+        </div>
+      </aside>
+
+      <div class="main-layout">
+        <header class="top-nav">
+          <div class="top-nav-content">
+            <div class="top-nav-left">
+              <h2 class="page-title">Dashboard</h2>
+            </div>
+            <div class="top-nav-right">
+              <button class="sidebar-toggle" id="sidebarToggle">
+                <i data-lucide="menu" class="nav-icon-top"></i>
+              </button>
+              <div class="nav-item">
+                <i data-lucide="bell" class="nav-icon-top"></i>
+              </div>
+              <div class="nav-item">
+                <i data-lucide="settings" class="nav-icon-top"></i>
+              </div>
+              <div class="nav-item user-menu">
+                <i data-lucide="user-circle" class="nav-icon-top"></i>
+                <div class="user-dropdown">
+                  <div class="dropdown-item">
+                    <i data-lucide="user" style="width: 16px; height: 16px;"></i>
+                    <span>Profile</span>
+                  </div>
+                  <div class="dropdown-item">
+                    <i data-lucide="settings" style="width: 16px; height: 16px;"></i>
+                    <span>Settings</span>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <div class="dropdown-item" id="themeToggle">
+                    <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+                    <span>Dark Mode</span>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <div class="dropdown-item">
+                    <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+                    <span>Logout</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
 
         <main class="main-content">
-          <div id="dashboard" class="page active">
-            <h2>Dashboard Overview</h2>
-            <div class="dashboard-grid" id="dashboardGrid">
-              <!-- Cards will be inserted here by JavaScript -->
+          <div class="dashboard-container" id="dashboard-container">
+            <!-- Page wrapper removed, content is direct -->
+
+            <div class="dashboard-top-section">
+              <div class="dashboard-main-stat">
+                <div class="glass-panel stat-card-large ">
+                  <div class="total-payout-section">
+                    <div class="total-payout">
+                      <div class="value-medium">Payout Overview</div>
+                      <div class="total-payout-content">
+                        <h3 class="insight-card-title">Total Payout Amount</h3>
+                        <h3 class="transaction-count" id="totalPayoutvalue">1,234</h3>
+                        <div class="value-medium" id="totalPayoutamount">$2,34,500.00</div>
+
+                        <div class="trend-indicator positive">
+                          <i data-lucide="trending-up"></i>
+                          <span>+12.5% vs last 30 days</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="insight-grid" id="insightGrid">
+                    <!-- Cards will be inserted here by JavaScript -->
+                  </div>
+                </div>
+              </div>
+              <div class="dashboard-secondary-stat glass-panel">
+                <div class="wallet-details">
+                  <h3>Overall Wallet Balance</h3>
+                  <div class="wallet-balance" id="walletBalance">--</div>
+                  <div class="bank-details-container">
+                    <div class="bank-logo">
+                      <img src="/public/bank-logo.svg" alt="Bank Logo"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                      <div class="bank-icon-placeholder" style="display:none"><i data-lucide="building-2"></i></div>
+                    </div>
+                    <div class="account-info">
+                      <div class="account-number" id="walletAccountNumber">--</div>
+                      <div class="ifsc-code" id="walletIfsc">--</div>
+                    </div>
+                    <button class="btn-copy" id="btnCopyWallet" title="Copy Account & IFSC">
+                      <i data-lucide="copy"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div id="payouts" class="page">
-            <h2>Payouts</h2>
-            <div class="payouts-container">
-              <table class="payouts-table" id="payoutsTable">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody id="payoutsBody">
-                  <!-- Payouts will be inserted here -->
-                </tbody>
-              </table>
+            <!-- Trends Section -->
+            <div class="dashboard-trends-section glass-panel">
+              <div class="trends-tabs">
+                <button class="tab-btn active" data-tab-target="tab-trends">Payout Transaction Trends</button>
+                <button class="tab-btn" data-tab-target="tab-insights">Payout Insights</button>
+              </div>
+
+              <div class="tab-content active" id="tab-trends">
+                <div class="trends-control-bar">
+                  <div class="trends-stats">
+                    <div class="trend-stat-item">
+                      <div class="stat-label">Total transaction count</div>
+                      <div class="stat-value">50</div>
+                    </div>
+                    <div class="trend-stat-item">
+                      <div class="stat-label">Gross transactions</div>
+                      <div class="stat-value">₹ 12,22,245.21</div>
+                    </div>
+                  </div>
+
+                  <div class="trends-utilities">
+                    <div class="date-filter">
+                      <select id="trendsDateFilter">
+                        <option value="7">Past 7 days</option>
+                        <option value="10">Last 10 Days</option>
+                        <option value="20">Last 20 Days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="this-month">This month</option>
+                      </select>
+                    </div>
+                    <div class="view-toggle">
+                      <button class="toggle-btn" id="btnViewChart" title="Chart View"><i
+                          data-lucide="bar-chart-2"></i></button>
+                      <button class="toggle-btn active" id="btnViewTable" title="Table View"><i
+                          data-lucide="table"></i></button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="trends-view-content">
+                  <div id="trendsChartContainer" style="display: none; height: 300px; width: 100%;">
+                    <canvas id="trendsChart"></canvas>
+                  </div>
+                  <table class="trends-table" id="trendsTable">
+                    <thead>
+                      <tr>
+                        <th>Transaction Date</th>
+                        <th>Total Transaction</th>
+                        <th>Success</th>
+                        <th>Pending</th>
+                        <th>Failed</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Populated by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="tab-content" id="tab-insights">
+                <div style="padding: 40px; text-align: center; color: #888;">
+                  <p>Advanced insights coming soon</p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div id="reports" class="page">
-            <h2>Reports</h2>
-            <p>Reports section coming soon...</p>
-          </div>
+            <!-- Secondary Widgets Row -->
+            <div class="dashboard-widgets-row">
+              <!-- Widget 1: Recent Transactions Timeline -->
+              <section class="widget-card glass-panel">
+                <header class="widget-header">
+                  <div class="widget-title-group">
+                    <h3>Recent Transactions - Timeline</h3>
+                  </div>
+                  <button class="link-button">
+                    <span>View All</span>
+                    <i data-lucide="chevron-right" class="link-icon"></i>
+                  </button>
+                </header>
 
-          <div id="transactions" class="page">
-            <h2>Transactions</h2>
-            <p>Transactions section coming soon...</p>
-          </div>
+                <ol class="timeline-list" id="recentTransactionsTimeline">
+                  <!-- Dynamic content -->
+                </ol>
+              </section>
 
-          <div id="settings" class="page">
-            <h2>Settings</h2>
-            <p>Settings section coming soon...</p>
+              <!-- Widget 2: Latest Virtual Accounts Table -->
+              <section class="widget-card glass-panel">
+                <header class="widget-header">
+                  <div class="widget-title-group">
+                    <h3>Latest Virtual Accounts - Table</h3>
+                  </div>
+                  <button class="link-button">
+                    <span>View All</span>
+                    <i data-lucide="chevron-right" class="link-icon"></i>
+                  </button>
+                </header>
+
+                <div class="va-table-wrapper">
+                  <table class="va-table">
+                    <thead>
+                      <tr>
+                        <th>Merchant Name</th>
+                        <th>Account &amp; IFSC</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="latestVirtualAccountsTable">
+                      <!-- Dynamic content -->
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
           </div>
         </main>
       </div>
     </div>
 
-    <script src="/src/js/main.js"></script>
-  </body>
+    <script src="/src/js/components/InsightCard.js"></script>
+    <script src="/src/js/sidebar.js"></script>
+    <script src="/src/js/dashboard.js"></script>
+    <script src="/src/js/theme.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+
 </html>

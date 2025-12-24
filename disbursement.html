@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disbursement - Payout Dashboard</title>
+  <link rel="stylesheet" href="/src/styles/global.css" />
+  <link rel="stylesheet" href="/src/styles/disbursement.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400..800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="app-content">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <img src="/public/Fictional_logo.svg" alt="logo" class="logo-full" />
+            <div class="logo-mini">
+              <i data-lucide="zap" class="logo-icon"></i>
+            </div>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="index.html#dashboard" class="nav-link">
+                <img src="/public/dashboard.svg" alt="dashboard" class="nav-icon" />
+                <span class="nav-text">Dashboard</span>
+              </a>
+            </li>
+
+            <li class="nav-section-title">PAYMENTS</li>
+            <li>
+              <a href="#" class="nav-link active">
+                <img src="/public/dashboard.svg" alt="disbursement" class="nav-icon" />
+                <span class="nav-text">Disbursement</span>
+              </a>
+            </li>
+            <li>
+              <a href="index.html#collections" class="nav-link">
+                <img src="/public/dashboard.svg" alt="collections" class="nav-icon" />
+                <span class="nav-text">Collections</span>
+              </a>
+            </li>
+
+            <li class="nav-section-title">ACCOUNTS</li>
+            <li>
+              <a href="index.html#payout-accounts" class="nav-link">
+                <img src="/public/dashboard.svg" alt="payout-accounts" class="nav-icon" />
+                <span class="nav-text">Payout Accounts</span>
+              </a>
+            </li>
+            <li>
+              <a href="index.html#virtual-accounts" class="nav-link">
+                <img src="/public/dashboard.svg" alt="virtual-accounts" class="nav-icon" />
+                <span class="nav-text">Virtual Accounts</span>
+              </a>
+            </li>
+            <li>
+              <a href="index.html#wallet-activity" class="nav-link">
+                <img src="/public/dashboard.svg" alt="wallet-activity" class="nav-icon" />
+                <span class="nav-text">Wallet Activity</span>
+              </a>
+            </li>
+            <li>
+              <a href="index.html#wallet-transaction" class="nav-link">
+                <img src="/public/dashboard.svg" alt="wallet-transaction" class="nav-icon" />
+                <span class="nav-text">Wallet Transaction</span>
+              </a>
+            </li>
+            <li>
+              <a href="index.html#merchants" class="nav-link">
+                <img src="/public/merchants.svg" alt="merchants" class="nav-icon" />
+                <span class="nav-text">Merchants</span>
+              </a>
+            </li>
+
+            <li class="nav-section-title">LOGS</li>
+            <li>
+              <a href="index.html#export-logs" class="nav-link">
+                <img src="/public/middle.svg" alt="export-logs" class="nav-icon" />
+                <span class="nav-text">Export Logs</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <p class="sidebar-version">v1.0.0</p>
+        </div>
+      </aside>
+
+      <div class="main-layout">
+        <header class="top-nav">
+          <div class="top-nav-content">
+                    <div class="top-nav-left">
+                      <h2 class="page-title">Disbursement</h2>
+                    </div>            <div class="top-nav-right">
+              <button class="sidebar-toggle" id="sidebarToggle">
+                <i data-lucide="menu" class="nav-icon-top"></i>
+              </button>
+              <div class="nav-item">
+                <i data-lucide="bell" class="nav-icon-top"></i>
+              </div>
+              <div class="nav-item">
+                <i data-lucide="settings" class="nav-icon-top"></i>
+              </div>
+              <div class="nav-item user-menu">
+                <i data-lucide="user-circle" class="nav-icon-top"></i>
+                <div class="user-dropdown">
+                  <div class="dropdown-item">
+                    <i data-lucide="user" style="width: 16px; height: 16px;"></i>
+                    <span>Profile</span>
+                  </div>
+                  <div class="dropdown-item">
+                    <i data-lucide="settings" style="width: 16px; height: 16px;"></i>
+                    <span>Settings</span>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <div class="dropdown-item" id="themeToggle">
+                    <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+                    <span>Dark Mode</span>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <div class="dropdown-item">
+                    <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+                    <span>Logout</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="main-content">
+          <div class="dashboard-container">
+            <div class="page active" style="display: block;"> <!-- Forced active -->
+              
+              <!-- Insight Cards Section -->
+            <section class="disbursement-insights">
+              <div class="insight-grid" id="insightGrid">
+                <!-- Cards will be inserted here by JavaScript -->
+              </div>
+            </section>
+            <div class="glass-panel">
+              <div class="disbursement-container">
+                <!-- Data Table Section -->
+                <section class="disbursement-table-section">
+                  <header class="disbursement-table-header">
+                    <div class="disbursement-status-tabs">
+                      <button class="status-tab active" data-status-filter="all">All</button>
+                      <button class="status-tab" data-status-filter="success">Successful</button>
+                      <button class="status-tab" data-status-filter="on-hold">On Hold</button>
+                      <button class="status-tab" data-status-filter="pending">Pending</button>
+                      <button class="status-tab" data-status-filter="failed">Failed</button>
+                    </div>
+
+                    <div class="disbursement-utilities">
+                      <button class="utility-btn" id="disbRefreshBtn" title="Refresh">
+                        <i data-lucide="refresh-cw"></i>
+                      </button>
+
+                      <div class="utility-search">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="disbSearchInput" placeholder="Search disbursements" />
+                      </div>
+
+                      <div class="utility-date-filter">
+                        <select id="disbDateFilter">
+                          <option value="all">All</option>
+                          <option value="last-3-months">Last 3 Month</option>
+                          <option value="last-2-months">Last 2 Month</option>
+                          <option value="last-30-days">Last 30 Days</option>
+                          <option value="last-10-days">Last 10 Days</option>
+                          <option value="last-7-days">Last 7 Days</option>
+                          <option value="today">Today</option>
+                          <option value="custom">Custom Date</option>
+                        </select>
+                      </div>
+
+                      <button class="utility-btn primary" id="disbExportBtn">
+                        <i data-lucide="download"></i>
+                        <span>Export</span>
+                      </button>
+                    </div>
+                  </header>
+
+                  <div class="disbursement-table-wrapper">
+                    <table class="payouts-table" id="disbursementTable">
+                      <thead>
+                        <tr>
+                          <th>Ref number</th>
+                          <th>Requested At</th>
+                          <th>Merchant Name</th>
+                          <th>Transaction ID</th>
+                          <th>Status</th>
+                          <th>Account Name</th>
+                          <th>Account Number</th>
+                          <th>IFSC Code</th>
+                          <th>TXN Amount</th>
+                          <th>UTR</th>
+                          <th>Message</th>
+                          <th>Merch Order ID</th>
+                          <th>Multiple UTR</th>
+                          <th>Updated at</th>
+                          <th>Response Message</th>
+                          <th>Error Message</th>
+                          <th>Response Code</th>
+                          <th>Payment Details</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Disbursement rows will be populated dynamically -->
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="pagination-container">
+                    <div class="pagination-info">
+                      Showing <span id="paginationStart">0</span> to <span id="paginationEnd">0</span> of <span
+                        id="paginationTotal">0</span> entries
+                    </div>
+                    <div class="pagination-controls">
+                      <button class="pagination-btn" id="prevPage" title="Previous Page">
+                        <i data-lucide="chevron-left"></i>
+                      </button>
+                      <div class="pagination-pages" id="paginationPages">
+                        <!-- Page numbers will be inserted here -->
+                      </div>
+                      <button class="pagination-btn" id="nextPage" title="Next Page">
+                        <i data-lucide="chevron-right"></i>
+                      </button>
+                    </div>
+                  </div>
+                </section>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/src/js/sidebar.js"></script>
+  <script src="/src/js/components/InsightCard.js"></script>
+  <script src="/src/js/disbursement.js"></script>
+  <script src="/src/js/theme.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+
+</html>
