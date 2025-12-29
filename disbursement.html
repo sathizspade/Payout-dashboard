@@ -98,9 +98,10 @@
       <div class="main-layout">
         <header class="top-nav">
           <div class="top-nav-content">
-                    <div class="top-nav-left">
-                      <h2 class="page-title">Disbursement</h2>
-                    </div>            <div class="top-nav-right">
+            <div class="top-nav-left">
+              <h2 class="page-title">Disbursement</h2>
+            </div>
+            <div class="top-nav-right">
               <button class="sidebar-toggle" id="sidebarToggle">
                 <i data-lucide="menu" class="nav-icon-top"></i>
               </button>
@@ -140,120 +141,217 @@
         <main class="main-content">
           <div class="dashboard-container">
             <div class="page active" style="display: block;"> <!-- Forced active -->
-              
+
               <!-- Insight Cards Section -->
-            <section class="disbursement-insights">
-              <div class="insight-grid" id="insightGrid">
-                <!-- Cards will be inserted here by JavaScript -->
-              </div>
-            </section>
-            <div class="glass-panel">
-              <div class="disbursement-container">
-                <!-- Data Table Section -->
-                <section class="disbursement-table-section">
-                  <header class="disbursement-table-header">
-                    <div class="disbursement-status-tabs">
-                      <button class="status-tab active" data-status-filter="all">All</button>
-                      <button class="status-tab" data-status-filter="success">Successful</button>
-                      <button class="status-tab" data-status-filter="on-hold">On Hold</button>
-                      <button class="status-tab" data-status-filter="pending">Pending</button>
-                      <button class="status-tab" data-status-filter="failed">Failed</button>
-                    </div>
-
-                    <div class="disbursement-utilities">
-                      <button class="utility-btn" id="disbRefreshBtn" title="Refresh">
-                        <i data-lucide="refresh-cw"></i>
-                      </button>
-
-                      <div class="utility-search">
-                        <i data-lucide="search"></i>
-                        <input type="text" id="disbSearchInput" placeholder="Search disbursements" />
+              <section class="disbursement-insights">
+                <div class="insight-grid" id="insightGrid">
+                  <!-- Cards will be inserted here by JavaScript -->
+                </div>
+              </section>
+              <div class="glass-panel">
+                <div class="disbursement-container">
+                  <!-- Data Table Section -->
+                  <section class="disbursement-table-section">
+                    <header class="disbursement-table-header">
+                      <div class="disbursement-status-tabs">
+                        <button class="status-tab active" data-status-filter="all">All</button>
+                        <button class="status-tab" data-status-filter="success">Successful</button>
+                        <button class="status-tab" data-status-filter="on-hold">On Hold</button>
+                        <button class="status-tab" data-status-filter="pending">Pending</button>
+                        <button class="status-tab" data-status-filter="failed">Failed</button>
                       </div>
 
-                      <div class="utility-date-filter">
-                        <select id="disbDateFilter">
-                          <option value="all">All</option>
-                          <option value="last-3-months">Last 3 Month</option>
-                          <option value="last-2-months">Last 2 Month</option>
-                          <option value="last-30-days">Last 30 Days</option>
-                          <option value="last-10-days">Last 10 Days</option>
-                          <option value="last-7-days">Last 7 Days</option>
-                          <option value="today">Today</option>
-                          <option value="custom">Custom Date</option>
-                        </select>
+                      <div class="disbursement-utilities">
+                        <button class="utility-btn" id="disbRefreshBtn" title="Refresh">
+                          <i data-lucide="refresh-cw"></i>
+                        </button>
+
+                        <div class="utility-search">
+                          <i data-lucide="search"></i>
+                          <input type="text" id="disbSearchInput" placeholder="Search disbursements" />
+                        </div>
+
+                        <div class="utility-date-filter">
+                          <select id="disbDateFilter">
+                            <option value="all">All</option>
+                            <option value="last-3-months">Last 3 Month</option>
+                            <option value="last-2-months">Last 2 Month</option>
+                            <option value="last-30-days">Last 30 Days</option>
+                            <option value="last-10-days">Last 10 Days</option>
+                            <option value="last-7-days">Last 7 Days</option>
+                            <option value="today">Today</option>
+                            <option value="custom">Custom Date</option>
+                          </select>
+                        </div>
+
+                        <button class="utility-btn primary" id="disbExportBtn">
+                          <i data-lucide="download"></i>
+                          <span>Export</span>
+                        </button>
                       </div>
+                    </header>
 
-                      <button class="utility-btn primary" id="disbExportBtn">
-                        <i data-lucide="download"></i>
-                        <span>Export</span>
-                      </button>
+                    <div class="disbursement-table-wrapper">
+                      <table class="payouts-table" id="disbursementTable">
+                        <thead>
+                          <tr>
+                            <th>Ref number</th>
+                            <th>Requested At</th>
+                            <th>Merchant Name</th>
+                            <th>Transaction ID</th>
+                            <th>Status</th>
+                            <th>Account Name</th>
+                            <th>Account Number</th>
+                            <th>IFSC Code</th>
+                            <th>TXN Amount</th>
+                            <th>UTR</th>
+                            <th>Message</th>
+                            <th>Merch Order ID</th>
+                            <th>Multiple UTR</th>
+                            <th>Updated at</th>
+                            <th>Response Message</th>
+                            <th>Error Message</th>
+                            <th>Response Code</th>
+                            <th>Payment Details</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- Disbursement rows will be populated dynamically -->
+                        </tbody>
+                      </table>
                     </div>
-                  </header>
 
-                  <div class="disbursement-table-wrapper">
-                    <table class="payouts-table" id="disbursementTable">
-                      <thead>
-                        <tr>
-                          <th>Ref number</th>
-                          <th>Requested At</th>
-                          <th>Merchant Name</th>
-                          <th>Transaction ID</th>
-                          <th>Status</th>
-                          <th>Account Name</th>
-                          <th>Account Number</th>
-                          <th>IFSC Code</th>
-                          <th>TXN Amount</th>
-                          <th>UTR</th>
-                          <th>Message</th>
-                          <th>Merch Order ID</th>
-                          <th>Multiple UTR</th>
-                          <th>Updated at</th>
-                          <th>Response Message</th>
-                          <th>Error Message</th>
-                          <th>Response Code</th>
-                          <th>Payment Details</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <!-- Disbursement rows will be populated dynamically -->
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div class="pagination-container">
-                    <div class="pagination-info">
-                      Showing <span id="paginationStart">0</span> to <span id="paginationEnd">0</span> of <span
-                        id="paginationTotal">0</span> entries
-                    </div>
-                    <div class="pagination-controls">
-                      <button class="pagination-btn" id="prevPage" title="Previous Page">
-                        <i data-lucide="chevron-left"></i>
-                      </button>
-                      <div class="pagination-pages" id="paginationPages">
-                        <!-- Page numbers will be inserted here -->
+                    <div class="pagination-container">
+                      <div class="pagination-info">
+                        Showing <span id="paginationStart">0</span> to <span id="paginationEnd">0</span> of <span
+                          id="paginationTotal">0</span> entries
                       </div>
-                      <button class="pagination-btn" id="nextPage" title="Next Page">
-                        <i data-lucide="chevron-right"></i>
-                      </button>
+                      <div class="pagination-controls">
+                        <button class="pagination-btn" id="prevPage" title="Previous Page">
+                          <i data-lucide="chevron-left"></i>
+                        </button>
+                        <div class="pagination-pages" id="paginationPages">
+                          <!-- Page numbers will be inserted here -->
+                        </div>
+                        <button class="pagination-btn" id="nextPage" title="Next Page">
+                          <i data-lucide="chevron-right"></i>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </section>
+                  </section>
 
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
-  </div>
 
-  <script src="/src/js/sidebar.js"></script>
-  <script src="/src/js/components/InsightCard.js"></script>
-  <script src="/src/js/disbursement.js"></script>
-  <script src="/src/js/theme.js"></script>
-  <script>
-    lucide.createIcons();
-  </script>
+    <script src="/src/js/sidebar.js"></script>
+    <script src="/src/js/components/InsightCard.js"></script>
+    <script src="/src/js/disbursement.js"></script>
+    <script src="/src/js/theme.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+
+    <!-- Side Modal for Disbursement Details -->
+    <div class="side-modal" id="disbursementModal">
+      <div class="modal-overlay" id="modalOverlay"></div>
+      <div class="modal-content">
+        <header class="modal-header">
+          <div class="header-left">
+            <h2>Transaction Details</h2>
+          </div>
+          <button class="close-btn" id="closeModal">
+            <i data-lucide="x"></i>
+          </button>
+        </header>
+
+        <div class="modal-body">
+          <!-- New Transaction Status Card -->
+          <div class="transaction-status-card">
+            <div class="status-card-row-1">
+              <div class="amount-group">
+                <span class="label">Amount</span>
+                <h1 id="modalStatusAmount">₹ 0.00</h1>
+              </div>
+              <span class="status-chip" id="modalStatusBadge">Pending</span>
+            </div>
+
+            <div class="status-card-info-group">
+              <span class="label">Sent to:</span>
+              <span class="value-name" id="modalSenderName">Senders Name</span>
+              <span class="value-meta" id="modalSenderMeta">9876543210 • sender@example.com</span>
+            </div>
+
+            <div class="status-card-info-group">
+              <span class="label">Received by:</span>
+              <span class="value-name" id="modalReceiverName">Receivers Name</span>
+              <span class="value-meta" id="modalReceiverMeta">0123456789 • receiver@example.com</span>
+            </div>
+          </div>
+
+                          <div class="detail-grid">
+                            <!-- Reference Info -->
+                            <div class="detail-card">
+                              <span class="label">Reference Number</span>
+                              <p id="modalRef">--</p>
+                            </div>
+                            
+                            <div class="detail-card">
+                              <span class="label">Transaction ID</span>
+                              <p id="modalTxnId">--</p>
+                            </div>
+                  
+                            <div class="detail-card">
+                              <span class="label">UTR</span>
+                              <p id="modalUtr">--</p>
+                            </div>
+                  
+                            <div class="detail-card">
+                              <span class="label">Requested At</span>
+                              <p id="modalRequestedAt">--</p>
+                            </div>
+                  
+                            <div class="detail-card">
+                              <span class="label">Account Name</span>
+                              <p id="modalAccountName">--</p>
+                            </div>
+                  
+                            <div class="detail-card">
+                              <span class="label">Account Number</span>
+                              <p id="modalAccountNumber">--</p>
+                            </div>
+                  
+                            <div class="detail-card">
+                              <span class="label">IFSC Code</span>
+                              <p id="modalIfsc">--</p>
+                            </div>
+                  
+                            <div class="detail-card">
+                              <span class="label">Merchant Order ID</span>
+                              <p id="modalMerchOrderId">--</p>
+                            </div>            <!-- Message Card -->
+            <div class="detail-card full-width">
+              <span class="label">Response Message</span>
+              <p id="modalMessage">--</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="modal-footer">
+          <button class="btn-secondary" id="btnDownloadReceipt">
+            <i data-lucide="download"></i>
+            <span>Download Receipt</span>
+          </button>
+          <button class="btn-primary">
+            <span>Support</span>
+          </button>
+        </footer>
+      </div>
+    </div>
 </body>
 
 </html>

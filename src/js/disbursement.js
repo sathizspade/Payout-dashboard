@@ -36,6 +36,16 @@ const mockDisbursements = Array.from({ length: 50 }, (_, i) => {
     errorMessage: randomStatus === DisbursementStatus.FAILED ? 'Bank declined' : '',
     responseCode: randomStatus === DisbursementStatus.FAILED ? '500' : '200',
     paymentDetails: `Paid via ${i % 2 === 0 ? 'NEFT' : 'RTGS'}`,
+    sender: {
+      name: `Sender ${i + 1}`,
+      mobile: `+91 ${Math.floor(6000000000 + Math.random() * 3999999999)}`,
+      email: `sender${i + 1}@payout.com`
+    },
+    receiver: {
+      name: `Account ${Math.floor(Math.random() * 20) + 1}`,
+      mobile: `+91 ${Math.floor(6000000000 + Math.random() * 3999999999)}`,
+      email: `receiver${i + 1}@merchant.com`
+    }
   };
 });
 
@@ -216,7 +226,7 @@ const renderTable = (data) => {
   }
 
   tbody.innerHTML = paginatedData.map((row) => `
-    <tr>
+    <tr class="clickable-row" data-ref="${row.refNumber}" style="cursor: pointer;">
       <td>${row.refNumber}</td>
       <td>${formatDate(row.requestedAt)}</td>
       <td>${row.merchantName}</td>
@@ -241,75 +251,87 @@ const renderTable = (data) => {
       <td>${row.paymentDetails}</td>
     </tr>
   `).join('');
+
+  // Add click listeners to rows
+  tbody.querySelectorAll('.clickable-row').forEach(rowEl => {
+    rowEl.addEventListener('click', () => {
+      const ref = rowEl.dataset.ref;
+      const transaction = mockDisbursements.find(d => d.refNumber === ref);
+      if (transaction) {
+        openModal(transaction);
+      }
+    });
+  });
 };
 
-const renderTableAndPagination = () => {
-  renderTable(state.filteredDisbursements);
-  renderPagination();
-};
+// Modal Logic
+const openModal = (tx) => {
+  const modal = document.getElementById('disbursementModal');
+  if (!modal) return;
 
-const renderSummary = (summary) => {
-  const cards = [
-    {
-      title: 'Successful',
-      value: formatCurrency(summary[DisbursementStatus.SUCCESSFUL].amount),
-      transactionCount: summary[DisbursementStatus.SUCCESSFUL].count,
-      icon: 'check-circle-2',
-      trend: '+12% vs last 30 days',
-      trendDirection: 'up',
-      showTrend: false
-    },
-    {
-      title: 'On Hold',
-      value: formatCurrency(summary[DisbursementStatus.ON_HOLD].amount),
-      transactionCount: summary[DisbursementStatus.ON_HOLD].count,
-      icon: 'clock',
-      trend: '-2% vs last 30 days',
-      trendDirection: 'down',
-      showTrend: false
-    },
-    {
-      title: 'Pending',
-      value: formatCurrency(summary[DisbursementStatus.PENDING].amount),
-      transactionCount: summary[DisbursementStatus.PENDING].count,
-      icon: 'loader',
-      trend: '0% vs last 30 days',
-      trendDirection: 'neutral',
-      showTrend: false
-    },
-    {
-      title: 'Failed',
-      value: formatCurrency(summary[DisbursementStatus.FAILED].amount),
-      transactionCount: summary[DisbursementStatus.FAILED].count,
-      icon: 'x-circle',
-      trend: '+1% vs last 30 days',
-      trendDirection: 'down',
-      showTrend: false
-    }
-  ];
-
-  if (typeof InsightCard !== 'undefined') {
-    InsightCard.renderAll('insightGrid', cards);
+  // Update Status Card Background
+  const statusCard = modal.querySelector('.transaction-status-card');
+  const statusClass = `status-${tx.status.toLowerCase().replace(' ', '-')}`;
+  if (statusCard) {
+    // Remove any existing status classes
+    statusCard.classList.remove('status-successful', 'status-pending', 'status-on-hold', 'status-failed');
+    statusCard.classList.add(statusClass);
   }
+
+  // Populate fields
+  const statusBadge = document.getElementById('modalStatusBadge');
+  if (statusBadge) {
+    statusBadge.textContent = tx.status;
+    statusBadge.className = `status-chip status-chip-${tx.status.toLowerCase().replace(' ', '-')}`;
+  }
+
+  const setModalText = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text || '-';
+  };
+
+  setModalText('modalStatusAmount', formatCurrency(tx.txnAmount));
+  
+  // Sender info (labeled "Sent to:" per request)
+  setModalText('modalSenderName', tx.sender.name);
+  setModalText('modalSenderMeta', `${tx.sender.mobile} • ${tx.sender.email}`);
+
+  // Receiver info (labeled "Received by:" per request)
+  setModalText('modalReceiverName', tx.receiver.name);
+  setModalText('modalReceiverMeta', `${tx.receiver.mobile} • ${tx.receiver.email}`);
+
+  setModalText('modalRef', tx.refNumber);
+  setModalText('modalTxnId', tx.transactionId);
+  setModalText('modalUtr', tx.utrMessage);
+  setModalText('modalRequestedAt', formatDate(tx.requestedAt));
+  setModalText('modalAccountName', tx.accountName);
+  setModalText('modalAccountNumber', tx.accountNumber);
+  setModalText('modalIfsc', tx.ifscCode);
+  setModalText('modalMerchOrderId', tx.merchOrderId);
+  setModalText('modalMessage', tx.responseMessage);
+
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden'; // Prevent scrolling
+  
+  if (window.lucide) lucide.createIcons();
 };
 
-const updateUI = async () => {
-  const tbody = document.querySelector('#disbursementTable tbody');
-  if (tbody) tbody.innerHTML = '<tr><td colspan="18" style="text-align:center;">Loading...</td></tr>';
-
-  const data = await disbursementService.getDisbursements(state.filters);
-  state.disbursements = data;
-  state.filteredDisbursements = data;
-  state.pagination.currentPage = 1; // Reset to first page on filter change
-  renderTableAndPagination();
-
-  // Summary is usually global, but we can update it on refresh too
-  const summary = await disbursementService.getSummary();
-  renderSummary(summary);
+const closeModal = () => {
+  const modal = document.getElementById('disbursementModal');
+  if (!modal) return;
+  modal.classList.remove('show');
+  document.body.style.overflow = '';
 };
 
 // Event Listeners
 const setupEventListeners = () => {
+  // Modal close listeners
+  const closeBtn = document.getElementById('closeModal');
+  const overlay = document.getElementById('modalOverlay');
+  
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (overlay) overlay.addEventListener('click', closeModal);
+
   // Status Tabs
   const tabs = document.querySelectorAll('.disbursement-status-tabs .status-tab');
   tabs.forEach(tab => {
