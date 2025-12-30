@@ -264,6 +264,71 @@ const renderTable = (data) => {
   });
 };
 
+const renderTableAndPagination = () => {
+  renderTable(state.filteredDisbursements);
+  renderPagination();
+};
+
+const renderSummary = (summary) => {
+  const cards = [
+    {
+      title: 'Successful',
+      value: formatCurrency(summary[DisbursementStatus.SUCCESSFUL].amount),
+      transactionCount: summary[DisbursementStatus.SUCCESSFUL].count,
+      icon: 'check-circle-2',
+      trend: '+12% vs last 30 days',
+      trendDirection: 'up',
+      showTrend: false
+    },
+    {
+      title: 'On Hold',
+      value: formatCurrency(summary[DisbursementStatus.ON_HOLD].amount),
+      transactionCount: summary[DisbursementStatus.ON_HOLD].count,
+      icon: 'clock',
+      trend: '-2% vs last 30 days',
+      trendDirection: 'down',
+      showTrend: false
+    },
+    {
+      title: 'Pending',
+      value: formatCurrency(summary[DisbursementStatus.PENDING].amount),
+      transactionCount: summary[DisbursementStatus.PENDING].count,
+      icon: 'loader',
+      trend: '0% vs last 30 days',
+      trendDirection: 'neutral',
+      showTrend: false
+    },
+    {
+      title: 'Failed',
+      value: formatCurrency(summary[DisbursementStatus.FAILED].amount),
+      transactionCount: summary[DisbursementStatus.FAILED].count,
+      icon: 'x-circle',
+      trend: '+1% vs last 30 days',
+      trendDirection: 'down',
+      showTrend: false
+    }
+  ];
+
+  if (typeof InsightCard !== 'undefined') {
+    InsightCard.renderAll('insightGrid', cards);
+  }
+};
+
+const updateUI = async () => {
+  const tbody = document.querySelector('#disbursementTable tbody');
+  if (tbody) tbody.innerHTML = '<tr><td colspan="18" style="text-align:center;">Loading...</td></tr>';
+
+  const data = await disbursementService.getDisbursements(state.filters);
+  state.disbursements = data;
+  state.filteredDisbursements = data;
+  state.pagination.currentPage = 1; // Reset to first page on filter change
+  renderTableAndPagination();
+
+  // Summary is usually global, but we can update it on refresh too
+  const summary = await disbursementService.getSummary();
+  renderSummary(summary);
+};
+
 // Modal Logic
 const openModal = (tx) => {
   const modal = document.getElementById('disbursementModal');
@@ -291,7 +356,7 @@ const openModal = (tx) => {
   };
 
   setModalText('modalStatusAmount', formatCurrency(tx.txnAmount));
-  
+
   // Sender info (labeled "Sent to:" per request)
   setModalText('modalSenderName', tx.sender.name);
   setModalText('modalSenderMeta', `${tx.sender.mobile} • ${tx.sender.email}`);
@@ -312,7 +377,7 @@ const openModal = (tx) => {
 
   modal.classList.add('show');
   document.body.style.overflow = 'hidden'; // Prevent scrolling
-  
+
   if (window.lucide) lucide.createIcons();
 };
 
@@ -328,7 +393,7 @@ const setupEventListeners = () => {
   // Modal close listeners
   const closeBtn = document.getElementById('closeModal');
   const overlay = document.getElementById('modalOverlay');
-  
+
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
   if (overlay) overlay.addEventListener('click', closeModal);
 

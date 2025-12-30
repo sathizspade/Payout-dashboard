@@ -23,7 +23,7 @@ const InsightCard = {
         ? `<img src="${icon}" class="card-icon" alt="${title} icon" />`
         : `<i data-lucide="${icon}" class="card-icon"></i>`
     ) : '';
-    
+
     const trendClass = trendDirection === 'up' ? 'positive' : trendDirection === 'down' ? 'negative' : '';
     const trendHtml = (trend && showTrend) ? `
       <div class="card-trend ${trendClass}">
@@ -43,7 +43,7 @@ const InsightCard = {
       <div class="insight-card">
         <div class="card-header">
           ${iconHtml}
-          <h3>${title}<span>${txCountHtml}</span></h3>
+          <h3 class="insight-card-title">${title}<span>${txCountHtml}</span></h3>
         </div>
         <p class="value">${value}</p>
         ${trendHtml}
@@ -57,13 +57,18 @@ const InsightCard = {
    * @param {Array} cards - Array of card option objects
    */
   renderAll: function (containerId, cards) {
+    console.log(`Rendering ${cards.length} insight cards into #${containerId}`);
     const container = document.getElementById(containerId);
     if (container) {
       container.innerHTML = cards.map(card => this.create(card)).join('');
       // Re-initialize Lucide icons for any new icons
       if (typeof lucide !== 'undefined') {
         lucide.createIcons();
+      } else {
+        console.warn('Lucide not found, icons will not be rendered');
       }
+    } else {
+      console.error(`Container #${containerId} not found for insight cards`);
     }
   }
 };
